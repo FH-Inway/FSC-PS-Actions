@@ -48,9 +48,9 @@ try {
         if($github[0].Payload.inputs)
         {
             Write-Debug "Analyzing payload inputs"
-            if($github[0].Payload.inputs.PSObject.Properties.name -and $github[0].Payload.inputs.PSObject.Properties.name -eq "includeTestModels")
+            if($github[0].Payload.inputs[0].PSObject.Properties.name -and $github[0].Payload.inputs[0].PSObject.Properties.name -eq "includeTestModels")
             {
-                $settings.includeTestModel = ($github[0].Payload.inputs.includeTestModels -eq "True")
+                $settings.includeTestModel = ($github[0].Payload.inputs[0].includeTestModels -eq "True")
             }
         }
     }
