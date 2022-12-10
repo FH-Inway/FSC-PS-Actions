@@ -37,6 +37,7 @@ try {
      }
 
     #Test-ALGoRepository -baseFolder $ENV:GITHUB_WORKSPACE
+    <# skip module installation for now
     $Az = Get-InstalledModule -Name AZ -ErrorAction SilentlyContinue
     $DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
 
@@ -48,6 +49,7 @@ try {
     {
         Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Force -Confirm:$false
     }
+    #>
 }
 catch {
     OutputError -message $_.Exception.Message
