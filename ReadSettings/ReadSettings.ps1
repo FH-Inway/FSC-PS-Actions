@@ -44,8 +44,10 @@ try {
 
     if($github[0].Payload.PSObject.Properties.name -and $github[0].Payload.PSObject.Properties.name -eq "inputs")
     {
+        Write-Debug "Checking for payload inputs"
         if($github[0].Payload.inputs)
         {
+            Write-Debug "Analyzing payload inputs"
             if($github[0].Payload.inputs.PSObject.Properties.name -and $github[0].Payload.inputs.PSObject.Properties.name -eq "includeTestModels")
             {
                 $settings.includeTestModel = ($github[0].Payload.inputs.includeTestModels -eq "True")
