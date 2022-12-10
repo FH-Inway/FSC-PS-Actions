@@ -33,7 +33,7 @@ try {
     $github = (Get-ActionContext)
 
 
-    if($github.Payload.PSObject.Properties.Name -eq "inputs")
+    if($github.Payload.PSObject.Properties.name -eq "inputs")
     {
         if($github.Payload.inputs)
         {
