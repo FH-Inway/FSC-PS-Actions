@@ -37,20 +37,20 @@ try {
     $DebugPreference = "Continue"
     $github[0] | select * | ft | Out-String -Stream | Write-Debug
     $github[0] | gm | Out-String -Stream | Write-Debug
-    $github[0].Payload | select * | ft | Out-String -Stream | Write-Debug
-    $github[0].Payload | gm | Out-String -Stream | Write-Debug
-    $github[0].Payload.inputs | select * | ft | Out-String -Stream | Write-Debug
-    $github[0].Payload.inputs | gm | Out-String -Stream | Write-Debug
+    $github[0].Payload[0] | select * | ft | Out-String -Stream | Write-Debug
+    $github[0].Payload[0] | gm | Out-String -Stream | Write-Debug
+    $github[0].Payload[0].inputs | select * | ft | Out-String -Stream | Write-Debug
+    $github[0].Payload[0].inputs | gm | Out-String -Stream | Write-Debug
 
-    if($github[0].Payload.PSObject.Properties.name -and $github[0].Payload.PSObject.Properties.name -eq "inputs")
+    if($github[0].Payload[0].PSObject.Properties.name -and $github[0].Payload[0].PSObject.Properties.name -eq "inputs")
     {
         Write-Debug "Checking for payload inputs"
-        if($github[0].Payload.inputs)
+        if($github[0].Payload[0].inputs)
         {
             Write-Debug "Analyzing payload inputs"
-            if($github[0].Payload.inputs[0].PSObject.Properties.name -and $github[0].Payload.inputs[0].PSObject.Properties.name -eq "includeTestModels")
+            if($github[0].Payload[0].inputs[0].PSObject.Properties.name -and $github[0].Payload[0].inputs[0].PSObject.Properties.name -eq "includeTestModels")
             {
-                $settings.includeTestModel = ($github[0].Payload.inputs[0].includeTestModels -eq "True")
+                $settings.includeTestModel = ($github[0].Payload[0].inputs[0].includeTestModels -eq "True")
             }
         }
     }
