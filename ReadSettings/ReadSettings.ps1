@@ -37,7 +37,7 @@ try {
     {
         if($github.Payload.inputs)
         {
-            if($github.Payload.inputs.PSObject.Properties.Name -eq "includeTestModels")
+            if($github.Payload.inputs.PSObject.Properties.name -eq "includeTestModels")
             {
                 $settings.includeTestModel = ($github.Payload.inputs.includeTestModels -eq "True")
             }
