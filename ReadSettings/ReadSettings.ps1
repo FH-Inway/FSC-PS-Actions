@@ -34,6 +34,7 @@ try {
     $github = (Get-ActionContext)
 
     Write-Host "Initialized variables"
+    $DebugPreference = "Continue"
     $github | ft | Out-String -Stream | Write-Debug
     $github | gm | Out-String -Stream | Write-Debug
     $github.Payload | ft | Out-String -Stream | Write-Debug
