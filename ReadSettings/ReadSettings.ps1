@@ -35,12 +35,12 @@ try {
 
     Write-Host "Initialized variables"
     $DebugPreference = "Continue"
-    $github | select * | ft | Out-String -Stream | Write-Debug
-    $github | gm | Out-String -Stream | Write-Debug
-    $github.Payload | select * | ft | Out-String -Stream | Write-Debug
-    $github.Payload | gm | Out-String -Stream | Write-Debug
-    $github.Payload.inputs | select * | ft | Out-String -Stream | Write-Debug
-    $github.Payload.inputs | gm | Out-String -Stream | Write-Debug
+    $github[0] | select * | ft | Out-String -Stream | Write-Debug
+    $github[0] | gm | Out-String -Stream | Write-Debug
+    $github[0].Payload | select * | ft | Out-String -Stream | Write-Debug
+    $github[0].Payload | gm | Out-String -Stream | Write-Debug
+    $github[0].Payload.inputs | select * | ft | Out-String -Stream | Write-Debug
+    $github[0].Payload.inputs | gm | Out-String -Stream | Write-Debug
 
     if($github[0].Payload.PSObject.Properties.name -and $github[0].Payload.PSObject.Properties.name -eq "inputs")
     {
