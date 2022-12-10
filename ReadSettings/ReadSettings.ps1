@@ -42,13 +42,13 @@ try {
     $github.Payload.inputs | select * | ft | Out-String -Stream | Write-Debug
     $github.Payload.inputs | gm | Out-String -Stream | Write-Debug
 
-    if($github.Payload.PSObject.Properties.name -and $github.Payload.PSObject.Properties.name -eq "inputs")
+    if($github[0].Payload.PSObject.Properties.name -and $github[0].Payload.PSObject.Properties.name -eq "inputs")
     {
-        if($github.Payload.inputs)
+        if($github[0].Payload.inputs)
         {
-            if($github.Payload.inputs.PSObject.Properties.name -and $github.Payload.inputs.PSObject.Properties.name -eq "includeTestModels")
+            if($github[0].Payload.inputs.PSObject.Properties.name -and $github[0].Payload.inputs.PSObject.Properties.name -eq "includeTestModels")
             {
-                $settings.includeTestModel = ($github.Payload.inputs.includeTestModels -eq "True")
+                $settings.includeTestModel = ($github[0].Payload.inputs.includeTestModels -eq "True")
             }
         }
     }
