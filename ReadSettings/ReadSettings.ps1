@@ -34,6 +34,9 @@ try {
     $github = (Get-ActionContext)
 
     Write-Host "Initialized variables"
+    Write-Debug $github
+    $githubmembers = $github | gm
+    Write-Debug $githubmembers
 
 
     if($github.Payload.PSObject.Properties.name -eq "inputs")
