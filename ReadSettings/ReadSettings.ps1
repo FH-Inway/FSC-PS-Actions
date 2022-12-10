@@ -20,6 +20,7 @@ try {
     . (Join-Path -Path $PSScriptRoot -ChildPath "..\FSC-PS-Helper.ps1" -Resolve)
 
     $settings = ReadSettings -baseFolder $ENV:GITHUB_WORKSPACE -workflowName $env:GITHUB_WORKFLOW
+    Write-Host "Got settings from setting files"
     if ($get) {
         $getSettings = $get.Split(',').Trim()
     }
@@ -32,6 +33,8 @@ try {
 
     $github = (Get-ActionContext)
 
+    Write-Host "Initialized variables"
+
 
     if($github.Payload.PSObject.Properties.name -eq "inputs")
     {
@@ -43,6 +46,8 @@ try {
             }
         }
     }
+
+    Write-Host "Determined includeTestModel setting"
 
     $repoType = $settings.type
     if($dynamicsEnvironment -and $dynamicsEnvironment -ne "*")
@@ -133,6 +138,8 @@ try {
         Add-Content -Path $env:GITHUB_OUTPUT -Value "Environments=$environmentsJson"
         Add-Content -Path $env:GITHUB_ENV -Value "Environments=$environmentsJson"
     }
+
+    Write-Host "Determined environment settings"
 
     if($DynamicsVersion -ne "*" -and $DynamicsVersion)
     {
