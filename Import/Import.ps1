@@ -101,7 +101,7 @@ try {
 
     invoke-git commit --allow-empty -m "'$message'"
 
-    invoke-git push $url
+    git push
 
 }
 catch {
