@@ -50,6 +50,10 @@ try {
         if($github[0].Payload[0].inputs)
         {
             Write-Debug "Checking inputs"
+            $github.Payload.inputs
+            $github.Payload.inputs.PSObject
+            $github.Payload.inputs.PSObject.Properties
+            $github.Payload.inputs.PSObject.Properties.name
             $github.Payload.inputs.PSObject.Properties.name -eq "includeTestModels"
             Write-Debug "Analyzing payload inputs"
             if($github[0].Payload[0].inputs[0].PSObject.Properties.name -and $github[0].Payload[0].inputs[0].PSObject.Properties.name -eq "includeTestModels")
