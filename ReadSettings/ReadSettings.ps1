@@ -42,11 +42,15 @@ try {
     $github[0].Payload[0].inputs | select * | ft | Out-String -Stream | Write-Debug
     $github[0].Payload[0].inputs | gm | Out-String -Stream | Write-Debug
 
+    $github.Payload.inputs
+
     if($github[0].Payload[0].PSObject.Properties.name -and $github[0].Payload[0].PSObject.Properties.name -eq "inputs")
     {
         Write-Debug "Checking for payload inputs"
         if($github[0].Payload[0].inputs)
         {
+            Write-Debug "Checking inputs"
+            $github.Payload.inputs.PSObject.Properties.name -eq "includeTestModels"
             Write-Debug "Analyzing payload inputs"
             if($github[0].Payload[0].inputs[0].PSObject.Properties.name -and $github[0].Payload[0].inputs[0].PSObject.Properties.name -eq "includeTestModels")
             {
