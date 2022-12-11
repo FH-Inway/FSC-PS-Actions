@@ -20,7 +20,6 @@ try {
     . (Join-Path -Path $PSScriptRoot -ChildPath "..\FSC-PS-Helper.ps1" -Resolve)
 
     $settings = ReadSettings -baseFolder $ENV:GITHUB_WORKSPACE -workflowName $env:GITHUB_WORKFLOW
-    Write-Host "Got settings from setting files"
     if ($get) {
         $getSettings = $get.Split(',').Trim()
     }
@@ -33,37 +32,17 @@ try {
 
     $github = (Get-ActionContext)
 
-    Write-Host "Initialized variables"
-    $DebugPreference = "Continue"
-    $github[0] | select * | ft | Out-String -Stream | Write-Debug
-    $github[0] | gm | Out-String -Stream | Write-Debug
-    $github[0].Payload[0] | select * | ft | Out-String -Stream | Write-Debug
-    $github[0].Payload[0] | gm | Out-String -Stream | Write-Debug
-    $github[0].Payload[0].inputs | select * | ft | Out-String -Stream | Write-Debug
-    $github[0].Payload[0].inputs | gm | Out-String -Stream | Write-Debug
-
-    $github.Payload.inputs
 
     if([bool]$github.Payload.PSObject.Properties["inputs"])
     {
-        Write-Debug "Checking for payload inputs"
-        if($github[0].Payload[0].inputs)
+        if($github.Payload.inputs)
         {
-            Write-Debug "Checking inputs"
-            $github.Payload.inputs
-            $github.Payload.inputs.PSObject
-            $github.Payload.inputs.PSObject.Properties
-            # $github.Payload.inputs.PSObject.Properties.name
-            [bool]$github.Payload.inputs.PSObject.Properties["includeTestModels"]
-            Write-Debug "Analyzing payload inputs"
             if([bool]$github.Payload.inputs.PSObject.Properties["includeTestModels"])
             {
-                $settings.includeTestModel = ($github[0].Payload[0].inputs[0].includeTestModels -eq "True")
+                $settings.includeTestModel = ($github.Payload.inputs.includeTestModels -eq "True")
             }
         }
     }
-
-    Write-Host "Determined includeTestModel setting"
 
     $repoType = $settings.type
     if($dynamicsEnvironment -and $dynamicsEnvironment -ne "*")
@@ -77,7 +56,7 @@ try {
                 $dynamicsEnvironment.Split(",") | ForEach-Object {
                     if($env.name -eq $_)
                     {
-                        if($env.settings.PSobject.Properties.name -match "deploy")
+                        if([bool]$env.settings.PSobject.Properties["deploy"])
                         {
                             $env.settings.deploy = $true
                         }
@@ -88,7 +67,7 @@ try {
             else {
                 if($env.name -eq $dynamicsEnvironment)
                 {
-                    if($env.settings.PSobject.Properties.name -match "deploy")
+                    if([bool]$env.settings.PSobject.Properties["deploy"])
                     {
                         $env.settings.deploy = $true
                     }
@@ -124,7 +103,7 @@ try {
     {
         $environments = @($envsFile | ForEach-Object { 
             $check = $true
-            if($_.settings.PSobject.Properties.name -match "deploy")
+            if([bool]$_.settings.PSobject.Properties["deploy"])
             {
                 $check = $_.settings.deploy
             }
@@ -154,8 +133,6 @@ try {
         Add-Content -Path $env:GITHUB_OUTPUT -Value "Environments=$environmentsJson"
         Add-Content -Path $env:GITHUB_ENV -Value "Environments=$environmentsJson"
     }
-
-    Write-Host "Determined environment settings"
 
     if($DynamicsVersion -ne "*" -and $DynamicsVersion)
     {
