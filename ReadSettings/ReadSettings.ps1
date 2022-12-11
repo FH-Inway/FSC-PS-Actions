@@ -53,7 +53,7 @@ try {
             $github.Payload.inputs
             $github.Payload.inputs.PSObject
             $github.Payload.inputs.PSObject.Properties
-            $github.Payload.inputs.PSObject.Properties.name
+            # $github.Payload.inputs.PSObject.Properties.name
             [bool]$github.Payload.inputs.PSObject.Properties["includeTestModels"]
             Write-Debug "Analyzing payload inputs"
             if([bool]$github.Payload.inputs.PSObject.Properties["includeTestModels"])
